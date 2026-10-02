@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>esp32-01 readings</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 2rem; background: #0f1720; color: #d7e3ee; }
+    h1 { font-size: 1.1rem; font-weight: 600; }
+    .wrap { max-width: 60rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>esp32-01 &mdash; 100 readings</h1>
+    <canvas id="chart"></canvas>
+  </div>
+  <script>
+    const points = [{"x":1788943733216,"temperature":25.4,"humidity":90},{"x":1788943736213,"temperature":25.2,"humidity":90},{"x":1788943739228,"temperature":25,"humidity":89.4},{"x":1788943742282,"temperature":25.1,"humidity":89.4},{"x":1788943745214,"temperature":25.4,"humidity":89.7},{"x":1788943748236,"temperature":25.5,"humidity":90},{"x":1788943751215,"temperature":25.4,"humidity":89.7},{"x":1788943754231,"temperature":25.4,"humidity":89.8},{"x":1788943757302,"temperature":25.3,"humidity":90},{"x":1788943760225,"temperature":25.2,"humidity":90},{"x":1788943763220,"temperature":24.9,"humidity":89.8},{"x":1788943766254,"temperature":24.6,"humidity":90},{"x":1788943769233,"temperature":24.5,"humidity":89.8},{"x":1788943772309,"temperature":24.7,"humidity":89.8},{"x":1788943775250,"temperature":25,"humidity":89},{"x":1788943778253,"temperature":25.2,"humidity":89.8},{"x":1788943781381,"temperature":25.5,"humidity":89.3},{"x":1788943784293,"temperature":25.3,"humidity":89.5},{"x":1788943787301,"temperature":25.5,"humidity":89.5},{"x":1788943790274,"temperature":25.5,"humidity":89.5},{"x":1788943793259,"temperature":25.7,"humidity":88.7},{"x":1788943796271,"temperature":25.5,"humidity":87.7},{"x":1788943799293,"temperature":25.2,"humidity":87.5},{"x":1788943804479,"temperature":25.3,"humidity":86.8},{"x":1788943805256,"temperature":25.4,"humidity":87},{"x":1788943808254,"temperature":25.6,"humidity":86.2},{"x":1788943811267,"temperature":25.7,"humidity":85.6},{"x":1788943814260,"temperature":25.5,"humidity":85.1},{"x":1788943817316,"temperature":25.3,"humidity":86.1},{"x":1788943820263,"temperature":25.1,"humidity":85.7},{"x":1788943823270,"temperature":25.2,"humidity":84.9},{"x":1788943826282,"temperature":25.3,"humidity":85.8},{"x":1788943829279,"temperature":25.5,"humidity":85.8},{"x":1788943832330,"temperature":25.2,"humidity":85.6},{"x":1788943835433,"temperature":25.2,"humidity":84.7},{"x":1788943838288,"temperature":25.3,"humidity":85.3},{"x":1788943841291,"temperature":25.1,"humidity":86},{"x":1788943844288,"temperature":25,"humidity":85.6},{"x":1788943847325,"temperature":25,"humidity":86.4},{"x":1788943850286,"temperature":24.8,"humidity":86},{"x":1788943853288,"temperature":24.6,"humidity":85.6},{"x":1788943856300,"temperature":24.3,"humidity":86.5},{"x":1788943859291,"temperature":24.4,"humidity":87.2},{"x":1788943862339,"temperature":24.6,"humidity":86.8},{"x":1788943865293,"temperature":24.8,"humidity":86.1},{"x":1788943868298,"temperature":24.8,"humidity":85.7},{"x":1788943871373,"temperature":24.8,"humidity":85.1},{"x":1788943874316,"temperature":24.9,"humidity":84.9},{"x":1788943877335,"temperature":24.9,"humidity":84.4},{"x":1788943880302,"temperature":25,"humidity":85.1},{"x":1788943883321,"temperature":24.8,"humidity":84.4},{"x":1788943886307,"temperature":25,"humidity":84.5},{"x":1788943889311,"temperature":24.8,"humidity":84.5},{"x":1788943892337,"temperature":24.7,"humidity":85.2},{"x":1788943895332,"temperature":24.5,"humidity":85.4},{"x":1788943898406,"temperature":24.5,"humidity":85.9},{"x":1788943901314,"temperature":24.4,"humidity":85.5},{"x":1788943904323,"temperature":24.5,"humidity":85},{"x":1788943907346,"temperature":24.2,"humidity":84.7},{"x":1788943910340,"temperature":24.1,"humidity":85},{"x":1788943913344,"temperature":24.1,"humidity":85.7},{"x":1788943916329,"temperature":24.3,"humidity":85.7},{"x":1788943919330,"temperature":24.4,"humidity":85.2},{"x":1788943922363,"temperature":24.6,"humidity":86},{"x":1788943925447,"temperature":24.6,"humidity":85.1},{"x":1788943928335,"temperature":24.8,"humidity":85.7},{"x":1788943931341,"temperature":24.8,"humidity":85.1},{"x":1788943934357,"temperature":24.7,"humidity":84.7},{"x":1788943937365,"temperature":24.7,"humidity":85.4},{"x":1788943940351,"temperature":24.9,"humidity":84.6},{"x":1788943943353,"temperature":24.7,"humidity":84.6},{"x":1788943946351,"temperature":24.6,"humidity":85.1},{"x":1788943949400,"temperature":24.4,"humidity":85.8},{"x":1788943952371,"temperature":24.4,"humidity":86.3},{"x":1788943955364,"temperature":24.6,"humidity":86.8},{"x":1788943958375,"temperature":24.3,"humidity":85.9},{"x":1788943961375,"temperature":24.4,"humidity":85.5},{"x":1788943964365,"temperature":24.5,"humidity":85.4},{"x":1788943967444,"temperature":24.5,"humidity":84.7},{"x":1788943970384,"temperature":24.3,"humidity":84.5},{"x":1788943973369,"temperature":24,"humidity":84.3},{"x":1788943976388,"temperature":23.7,"humidity":84.6},{"x":1788943979557,"temperature":23.9,"humidity":84.9},{"x":1788943982379,"temperature":23.8,"humidity":85},{"x":1788943985377,"temperature":24,"humidity":84.7},{"x":1788943988492,"temperature":24.2,"humidity":84.8},{"x":1788943991443,"temperature":24,"humidity":84.6},{"x":1788943994402,"temperature":24.1,"humidity":85.2},{"x":1788943997383,"temperature":24.3,"humidity":85.7},{"x":1788944000386,"temperature":24.3,"humidity":86},{"x":1788944003392,"temperature":24.3,"humidity":86.9},{"x":1788944006423,"temperature":24.1,"humidity":87.2},{"x":1788944009510,"temperature":24.4,"humidity":86.3},{"x":1788944012445,"temperature":24.4,"humidity":85.5},{"x":1788944015454,"temperature":24.5,"humidity":86.2},{"x":1788944018396,"temperature":24.6,"humidity":86.7},{"x":1788944021508,"temperature":24.5,"humidity":87},{"x":1788944024414,"temperature":24.6,"humidity":86.8},{"x":1788944027400,"temperature":24.7,"humidity":87.2},{"x":1788944030500,"temperature":24.6,"humidity":87}];
+    new Chart(document.getElementById("chart"), {
+      type: "line",
+      data: {
+        datasets: [
+          { label: "Temperature (C)", data: points.map(p => ({ x: p.x, y: p.temperature })),
+            borderColor: "#4cc9f0", yAxisID: "y", pointRadius: 0, tension: 0.2 },
+          { label: "Humidity (%)", data: points.map(p => ({ x: p.x, y: p.humidity })),
+            borderColor: "#f4a261", yAxisID: "y1", pointRadius: 0, tension: 0.2 }
+        ]
+      },
+      options: {
+        responsive: true,
+        interaction: { mode: "index", intersect: false },
+        scales: {
+          // A real time axis. Gaps in the data show as gaps in the line.
+          x: { type: "time", ticks: { color: "#8fa3b8" }, grid: { color: "#1e2a36" } },
+          y: { position: "left", title: { display: true, text: "C" },
+               ticks: { color: "#8fa3b8" }, grid: { color: "#1e2a36" } },
+          y1: { position: "right", title: { display: true, text: "%" },
+                ticks: { color: "#8fa3b8" }, grid: { drawOnChartArea: false } }
+        },
+        plugins: { legend: { labels: { color: "#d7e3ee" } } }
+      }
+    });
+  </script>
+</body>
+</html>
